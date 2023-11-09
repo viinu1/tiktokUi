@@ -65,7 +65,7 @@ export default function Search() {
             )}
             onClickOutside={handleHideResult}
         >
-            <div className="search__header">
+            <div className="w-[500px] h-11 text-sm bg-[#1618210f] rounded-3xl ps-4 relative flex border-2 border-transparent focus-within:border-hoverColor ml-auto mr-[10%]">
                 <input
                     className="flex-1 bg-transparent text-blackColor caret-seconde w-full text-base font-normal border-0 outline-0 py-3"
                     type="text"
@@ -78,7 +78,7 @@ export default function Search() {
                 />
                 {!!searchValue && !loading && (
                     <button
-                        className="icon__header-clear"
+                        className="absolute top-1/2 -translate-y-1/2 right-[12%] text-base cursor-pointer"
                         onClick={() => {
                             setSearchValue('');
                             inputRef.current.focus();
@@ -90,7 +90,7 @@ export default function Search() {
                 )}
 
                 {loading && (
-                    <button className="icon__header-loading">
+                    <button className="absolute top-1/2 -translate-y-1/2 right-[12%] text-base">
                         <FontAwesomeIcon className="animate-spin" icon={faSpinner} />
                     </button>
                 )}

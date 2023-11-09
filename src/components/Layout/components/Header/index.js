@@ -111,7 +111,7 @@ function Header() {
                     {!isLogin && (
                         <Link
                             to={`/login`}
-                            className="bg-seconde px-4 py-2 text-white text-base font-[600] rounded-md login__header-hover no-underline"
+                            className="bg-seconde px-4 py-2 text-white text-base font-[600] rounded-md hover:bg-gradient-to-b from-[#0000000f] to-[#fe2c55] no-underline login__header-hover"
                         >
                             Đăng nhập
                         </Link>
