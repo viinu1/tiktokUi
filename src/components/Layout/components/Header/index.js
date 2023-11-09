@@ -1,43 +1,172 @@
-import { faEllipsisVertical, faMagnifyingGlass, faPlus, faSpinner, faXmark } from '@fortawesome/free-solid-svg-icons';
+import HeadlessTippy from '@tippyjs/react/headless';
+import Tippy from '@tippyjs/react';
+import { Link } from 'react-router-dom';
+import {
+    faArrowRightFromBracket,
+    faBookmark,
+    faCircleQuestion,
+    faCoins,
+    faEarthAsia,
+    faEllipsisVertical,
+    faKeyboard,
+    faLightbulb,
+    faMoon,
+    faPlus,
+    faUser,
+    faUserAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DownloadIcon, Logo, MessageIcon, uploadIcon } from '~/components/Icons';
+import { DownloadIcon, Logo, MessageIcon, NofiIcon, ShareIcon } from '~/components/Icons';
+import { Wrapper as PopperWrapper } from '~/components/Popper';
+import MenuItem from '~/components/Popper/MenuItem';
+import Search from '../Search';
+import Image from '~/components/Image';
+import routesConfig from '~/until/router';
+
+const MENU_ITEM = [
+    {
+        icon: <FontAwesomeIcon className="w-full h-full" icon={faLightbulb} />,
+        title: 'Trung Tâm Nhà Sáng tạo live',
+    },
+    {
+        icon: <FontAwesomeIcon className="w-full h-full" icon={faEarthAsia} />,
+        title: 'Tiếng việt',
+        children: {
+            title: 'Language',
+            data: [
+                {
+                    type: 'Language',
+                    code: 'en',
+                    title: 'English',
+                },
+                {
+                    type: 'Language',
+                    code: 'vn',
+                    title: 'Việt Nam',
+                },
+                {
+                    type: 'Language',
+                    code: 'chi',
+                    title: 'China',
+                },
+            ],
+        },
+    },
+    {
+        icon: <FontAwesomeIcon className="w-full h-full" icon={faCircleQuestion} />,
+        title: 'Phản hổi và trợ giúp',
+    },
+    {
+        icon: <FontAwesomeIcon className="w-full h-full" icon={faKeyboard} />,
+        title: 'Phím tắt trên bàn phím',
+    },
+    {
+        icon: <FontAwesomeIcon className="w-full h-full" icon={faMoon} />,
+        title: 'Chế độ tối',
+    },
+];
 
 function Header() {
-    return (
-        <div className="border-b border-[1px] shadow-sm h-[60px] flex items-center">
-            <div className="container mx-auto flex items-center justify-between">
-                <div className="fill-black">
-                    <Logo />
-                </div>
-                <div className="search__header">
-                    <input
-                        className="flex-1 bg-transparent text-blackColor caret-seconde w-full text-16 font-[400] border-0 outline-0 py-[12px]"
-                        type="text"
-                        placeholder="Tìm Kiếm"
-                        spellCheck={false}
-                    />
-                    <button className="icon__header-clear">
-                        <FontAwesomeIcon icon={faXmark} />
-                    </button>
-                    <button className="icon__header-loading">
-                        <FontAwesomeIcon icon={faSpinner} />
-                    </button>
-                    <span className="w-[1px] h-[28px] my-[9px] mx-0 bg-textSecond"></span>
+    const isLogin = false;
+    const userMenu = [
+        {
+            icon: <FontAwesomeIcon className="w-full h-full" icon={faUser} />,
+            title: 'Xem hồ sơ',
+        },
+        {
+            icon: <FontAwesomeIcon className="w-full h-full" icon={faBookmark} />,
+            title: 'Yêu thích',
+        },
+        {
+            icon: <FontAwesomeIcon className="w-full h-full" icon={faCoins} />,
+            title: 'Nhận Xu',
+            to: '/coins',
+        },
+        ...MENU_ITEM,
+        {
+            icon: <FontAwesomeIcon className="w-full h-full" icon={faArrowRightFromBracket} />,
+            title: 'Đăng xuất',
+        },
+    ];
 
-                    <button className="w-[52px] h-full text-text text-20 rounded-tr-[92px] rounded-br-[92px] hover:bg-textSecond">
-                        <FontAwesomeIcon icon={faMagnifyingGlass} />
-                    </button>
-                </div>
+    const handleMenuChange = (menuItem) => {
+        console.log(menuItem);
+    };
+    return (
+        <div className="border-b border-[1px] shadow-sm h-16 flex items-center px-6 fixed top-o left-0 right-0 z-20 bg-white">
+            <div className="container mx-auto flex items-center justify-between">
+                <Link to={routesConfig.home} className="flex items-center">
+                    <Logo />
+                    <div></div>
+                </Link>
+                {/* search */}
+                <Search />
+
+                {/* action */}
                 <div className="flex items-center gap-3 relative">
-                    <button className="border px-4 py-2 text-16 font-[600] text-blackColor rounded-[2px] hover:bg-[#16182308]">
-                        <FontAwesomeIcon icon={faPlus} className="text-16 text-blackColor font-bold me-3" />
+                    <button className="border px-4 py-2 text-16 font-semibold text-blackColor rounded-[2px] hover:bg-[#16182308] me-2">
+                        <FontAwesomeIcon icon={faPlus} className="text-base text-blackColor font-bold me-3" />
                         Tải lên
                     </button>
-                    <button className="bg-seconde px-4 py-2 text-white text-16 font-[600] rounded-[4px] login__header-hover">
-                        Đăng nhập
-                    </button>
-                    <DownloadIcon />
-                    <FontAwesomeIcon icon={faEllipsisVertical} className="text-[24px] cursor-pointer ms-6" />
+                    {!isLogin && (
+                        <Link
+                            to={`/login`}
+                            className="bg-seconde px-4 py-2 text-white text-base font-[600] rounded-md login__header-hover no-underline"
+                        >
+                            Đăng nhập
+                        </Link>
+                    )}
+
+                    <HeadlessTippy
+                        interactive
+                        render={(attrs) => (
+                            <div className="w-[216px]" tabIndex="-1" {...attrs}>
+                                <PopperWrapper>
+                                    <div className="flex flex-column items-center">
+                                        <ShareIcon className="w-[116px] h-[100px]" />
+                                        <p className="font-bold text-blackColor text-base text-center leading-5 mt-2">
+                                            Ứng dụng TikTok cho máy tính
+                                        </p>
+                                        <button className="border-0 text-white bg-seconde m-w-[168px] max-h-12 flex items-center justify-center py-1 px-3 w-full h-12 cursor-pointer text-sm font-bold mt-5 hover:opacity-90">
+                                            Tải Về
+                                        </button>
+                                    </div>
+                                </PopperWrapper>
+                            </div>
+                        )}
+                    >
+                        <div>
+                            <DownloadIcon className="cursor-pointer" width="32px" height="32px" />
+                        </div>
+                    </HeadlessTippy>
+                    {isLogin ? (
+                        <div className="flex items-center gap-3">
+                            <Tippy content="Tin nhắn">
+                                <div className="cursor-pointer">
+                                    <MessageIcon width="32px" height="32px" />
+                                </div>
+                            </Tippy>
+                            <Tippy content="Hộp thư">
+                                <div className="cursor-pointer">
+                                    <NofiIcon width="32px" height="32px" />
+                                </div>
+                            </Tippy>
+                            <MenuItem items={userMenu} onChange={handleMenuChange}>
+                                <div className="w-10 h-10 cursor-pointer">
+                                    <Image
+                                        className="w-full h-full object-cover rounded-full"
+                                        src="https://dwww.vietnamfineart.com.vn/wp-content/uploads/2023/07/anh-avatar-dep-cho-con-gai-1.jpg"
+                                        alt="avatar"
+                                        fallBack="https://img.pikbest.com/png-images/qiantu/cute-cartoon-avatar-fat-boy-eating-watermelon-element_2514723.png!sw800"
+                                    />
+                                </div>
+                            </MenuItem>
+                        </div>
+                    ) : (
+                        <MenuItem items={MENU_ITEM} onChange={handleMenuChange}>
+                            <FontAwesomeIcon icon={faEllipsisVertical} className="text-2xl cursor-pointer p-2" />
+                        </MenuItem>
+                    )}
                 </div>
             </div>
         </div>

@@ -2,13 +2,6 @@
 module.exports = {
     content: ['./src/**/*.{html,js}'],
     theme: {
-        fontSize: {
-            14: '1.4rem',
-            16: '1.6rem',
-            20: '2rem',
-            32: '3.2rem',
-            48: '4.8rem',
-        },
         extend: {
             colors: {
                 primary: '#243c5a',
@@ -21,9 +14,13 @@ module.exports = {
             },
             boxShadow: {
                 sm: '0px 1px 1px rgba(0, 0, 0, 0.12)',
+                popper: 'rgba(0, 0, 0, 0.12) 0px 2px 12px',
             },
             backgroundImage: {
                 linear: 'linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)),#FE2C55',
+            },
+            maxHeight: {
+                128: 'min((100vh - 96px) - 60px, 760px)',
             },
         },
     },
