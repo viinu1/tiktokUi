@@ -1,13 +1,14 @@
 import axios from 'axios';
 
-// const token = JSON.parse(localStorage.getItem('token'));
+const token = localStorage.getItem('userToken');
+console.log(token);
 // console.log(token);
 const httpRequest = axios.create({
     baseURL: 'https://tiktok.fullstack.edu.vn/api/',
     // withCredentials: false,
     headers: {
         'content-type': 'application/json',
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
     },
 });
 

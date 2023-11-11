@@ -13,7 +13,6 @@ import {
     faMoon,
     faPlus,
     faUser,
-    faUserAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DownloadIcon, Logo, MessageIcon, NofiIcon, ShareIcon } from '~/components/Icons';
@@ -22,6 +21,7 @@ import MenuItem from '~/components/Popper/MenuItem';
 import Search from '../Search';
 import Image from '~/components/Image';
 import routesConfig from '~/until/router';
+import { useEffect, useState } from 'react';
 
 const MENU_ITEM = [
     {
@@ -67,11 +67,21 @@ const MENU_ITEM = [
 ];
 
 function Header() {
-    const isLogin = false;
+    const userToken = localStorage.getItem('userToken');
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+
+    const [isLogin, setIsLogin] = useState(false);
+    useEffect(() => {
+        if (!!userToken) {
+            setIsLogin(true);
+        }
+    }, [isLogin, userToken]);
+
     const userMenu = [
         {
             icon: <FontAwesomeIcon className="w-full h-full" icon={faUser} />,
             title: 'Xem hồ sơ',
+            to: `@/${userInfo.nickname}`,
         },
         {
             icon: <FontAwesomeIcon className="w-full h-full" icon={faBookmark} />,
@@ -86,6 +96,8 @@ function Header() {
         {
             icon: <FontAwesomeIcon className="w-full h-full" icon={faArrowRightFromBracket} />,
             title: 'Đăng xuất',
+            clickMouse: true,
+            to: '/logout',
         },
     ];
 

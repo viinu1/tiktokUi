@@ -35,7 +35,6 @@ export default function MenuItem({ children, items = [], hideOnClick = false, on
                             if (item.to) {
                                 link = item.to;
                             }
-                            // const className = ;
 
                             return (
                                 <Link

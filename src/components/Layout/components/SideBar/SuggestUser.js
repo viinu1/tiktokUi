@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Image from '~/components/Image';
 
 export default function SuggestUser({ title, data }) {
-    console.log(data);
     return (
         <div className="py-4 text-sm font-semibold ps-0">
             <h2 className="px-2 text-sm text-gray-700 font-semibold">{title}</h2>

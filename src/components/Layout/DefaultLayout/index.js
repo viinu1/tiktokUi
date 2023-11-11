@@ -7,9 +7,7 @@ function DefaultLayout({ children }) {
             <Header />
             <div className="container flex h-[2000px]">
                 <SideBar />
-                <div className="ps-[232px]  mt-[60px] w-full mx-auto m-w-[420px] flex flex-col items-center">
-                    {children}
-                </div>
+                <div className="ps-[232px] mt-[60px] w-full">{children}</div>
             </div>
         </div>
     );

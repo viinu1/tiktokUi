@@ -1,4 +1,4 @@
-import { faBookmark, faCheck, faCommentDots, faHeart, faMusic, faShare } from '@fortawesome/free-solid-svg-icons';
+import { faBookmark, faCommentDots, faHeart, faMusic, faShare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
@@ -13,13 +13,12 @@ function Home() {
         const getListVideos = async () => {
             const result = await httpRequest.get('videos?type=for-you&page=1');
             setListVideos(result.data);
-            console.log(result.data);
         };
         getListVideos();
     }, []);
 
     return (
-        <div className="w-[700px]">
+        <div className="w-[700px] mx-auto flex flex-col items-center m-w-[420px]">
             {listVideos?.map((video, index) => (
                 <div className="flex gap-4 pt-4 border-b pb-4" key={index}>
                     <div className="w-14 h-14 ">

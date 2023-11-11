@@ -1,20 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { LoginUser } from '~/features/auth/authSlice';
 import { useDebounce } from '~/hook';
 
 export default function Login() {
+    const { userInfo, success } = useSelector((state) => state.auth);
     const [user, setUser] = useState({
         email: '',
         password: '',
     });
-
     const handleOnchange = (e) => {
         setUser({
             ...user,
             [e.target.name]: e.target.value,
         });
     };
-    const debounce = useDebounce(user, 500);
-    console.log(debounce);
+
+    const data = useDebounce(user, 500);
+    const dispatch = useDispatch();
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (user.email === '') {
+            alert('email mismatch');
+        }
+        if (user.password === '') {
+            alert('Password mismatch');
+        }
+        dispatch(LoginUser(data));
+    };
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (success) navigate('/');
+    }, [navigate, userInfo, success]);
 
     return (
         <div className="flex items-center justify-center h-screen bg-slate-100">
@@ -48,7 +67,9 @@ export default function Login() {
                         value={user.password}
                     />
                 </div>
-                <button className="bg-green-500 w-full p-1 rounded-lg cursor-pointer mt-1">Đăng nhập</button>
+                <button onClick={handleSubmit} className="bg-green-500 w-full p-1 rounded-lg cursor-pointer mt-1">
+                    Đăng nhập
+                </button>
             </form>
         </div>
     );
