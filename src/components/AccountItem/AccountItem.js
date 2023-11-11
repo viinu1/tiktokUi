@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 export default function AccountItem({ data }) {
     return (
         <Link
-            to={`@/${data.nickname}`}
+            to={`/@/${data.nickname}`}
             className="py-[9px] px-4 flex items-center cursor-pointer gap-3 hover:bg-textSecond no-underline"
         >
             <div className="w-10 h-10">

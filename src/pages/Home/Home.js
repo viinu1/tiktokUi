@@ -8,11 +8,11 @@ import Image from '~/components/Image';
 
 function Home() {
     const [listVideos, setListVideos] = useState([]);
-
     useEffect(() => {
         const getListVideos = async () => {
             const result = await httpRequest.get('videos?type=for-you&page=1');
             setListVideos(result.data);
+            // console.log(result.data);
         };
         getListVideos();
     }, []);
@@ -61,20 +61,25 @@ function Home() {
                             </button>
                         </div>
                         {/* video */}
-                        <div className="flex items-end gap-3 mt-3">
+                        <div className="flex items-end gap-3 mt-3 rounded-md">
                             <ReactPlayer
                                 url={video.file_url}
-                                width={320}
-                                height={500}
+                                // className="rounded-md"
+                                width={310}
+                                height={554}
                                 controls
                                 playing={true}
-                                // light={video.thumb_url}
+                                light={video.thumb_url}
+                                loop
                             />
 
                             <div className="flex flex-col gap-3">
                                 <div className="flex items-center flex-col gap-2">
                                     <span className="bg-gray-300 rounded-full w-12 h-12 cursor-pointer flex items-center justify-center">
-                                        <FontAwesomeIcon icon={faHeart} className="text-2xl" />
+                                        <FontAwesomeIcon
+                                            icon={faHeart}
+                                            className={`text-2xl ${video.is_liked ? 'text-[#fe2c55]' : ''}`}
+                                        />
                                     </span>
                                     <span className="text-xs text-[#161823bf]">{video.likes_count}</span>
                                 </div>
