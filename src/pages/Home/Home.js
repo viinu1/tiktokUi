@@ -18,9 +18,9 @@ function Home() {
     }, []);
 
     return (
-        <div className="w-[700px] mx-auto flex flex-col items-center m-w-[420px]">
+        <div className="w-[750px] mx-auto flex flex-col items-center m-w-[420px] snap-y snap-mandatory overflow-scroll h-full">
             {listVideos?.map((video, index) => (
-                <div className="flex gap-4 pt-4 border-b pb-4" key={index}>
+                <div className="flex gap-4 pt-4 border-b pb-4 snap-start" key={index}>
                     <div className="w-14 h-14 ">
                         <Image
                             src={video.user.avatar}

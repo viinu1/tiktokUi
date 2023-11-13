@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const token = localStorage.getItem('userToken');
-console.log(token);
+// console.log(token);
 // console.log(token);
 const httpRequest = axios.create({
     baseURL: 'https://tiktok.fullstack.edu.vn/api/',

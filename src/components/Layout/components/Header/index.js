@@ -155,7 +155,7 @@ function Header() {
                     {isLogin ? (
                         <div className="flex items-center gap-3">
                             <Tippy content="Tin nhắn">
-                                <div className="cursor-pointer">
+                                <div className="cursor-propointer">
                                     <MessageIcon width="32px" height="32px" />
                                 </div>
                             </Tippy>

@@ -1,12 +1,29 @@
-import { faPenToSquare, faShare } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faPenToSquare, faShare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
 import Image from '~/components/Image';
 
+import ItemVideo from './ItemVideo';
+import * as httpRequest from '~/api/httpRequest';
+
 export default function Profile() {
+    const [listVideos, setListVideos] = useState([]);
+    useEffect(() => {
+        const getListVideos = async () => {
+            const result = await httpRequest.get('videos?type=for-you&page=1');
+            setListVideos(result.data);
+            // console.log(result.data);
+        };
+        getListVideos();
+    }, []);
+    const [toggle, setToggle] = useState(1);
+    const updateToggle = (id) => {
+        setToggle(id);
+    };
     return (
         <div className="px-6 flex py-8 flex-col min-h-[cacl(100vh - 59px)]">
-            <div className="flex flex-auto">
+            <div className="flex flex-auto flex-col">
                 <header className="max-w-[624px] pe-24 min-h-[140px] flex flex-col w-[624px] relative">
                     <div className="flex items-center gap-5">
                         <div className="w-[116px] h-[116px]">
@@ -48,8 +65,55 @@ export default function Profile() {
                         <FontAwesomeIcon icon={faShare} className="w-6 h-6" />
                     </div>
                 </header>
+                <div className="flex-auto flex flex-col justify-start min-h-[490px] min-w-[52px] relative">
+                    <div className="flex items-center w-full h-11 mb-2 bg-white relative after:content-[''] after:w-full after:absolute after:h-[2px] after:bg-gray-300 after:bottom-[3px]">
+                        <div
+                            onClick={() => updateToggle(1)}
+                            className={`text-lg font-semibold flex items-center justify-center px-8 pb-2 cursor-pointer ${
+                                toggle === 1 ? 'text-blackColor border-b-2' : 'text-[#73747b]'
+                            }  hover:border-b-2 border-blackColor z-30`}
+                        >
+                            Video
+                        </div>
+                        <div
+                            onClick={() => updateToggle(2)}
+                            className={`text-lg font-semibold flex items-center justify-center px-8 pb-2 cursor-pointer ${
+                                toggle === 2 ? 'text-blackColor border-b-2' : 'text-[#73747b]'
+                            } gap-1 hover:border-b-2 border-blackColor z-30`}
+                        >
+                            <FontAwesomeIcon icon={faLock} />
+                            Yêu thích
+                        </div>
+                        <div
+                            onClick={() => updateToggle(3)}
+                            className={`text-lg font-semibold flex items-center justify-center px-8 pb-2  cursor-pointer ${
+                                toggle === 3 ? 'text-blackColor border-b-2' : 'text-[#73747b]'
+                            } gap-1 hover:border-b-2 border-blackColor z-30`}
+                        >
+                            <FontAwesomeIcon icon={faLock} />
+                            Đã thích
+                        </div>
+                        {/* <span className="absolute h-[2px] w-[113px] bg-blackColor bottom-0 transition-transform delay-300 ease-in translate-x-0"></span> */}
+                    </div>
+                    <div className="w-full mt-1">
+                        <div className={`grid grid-cols-5 gap-x-4 gap-y-6 ${toggle === 1 ? 'block' : 'hidden'}`}>
+                            {listVideos?.map((item, index) => (
+                                <ItemVideo data={item} key={index} />
+                            ))}
+                        </div>
+                        <div className={`grid grid-cols-5 gap-x-4 gap-y-6 ${toggle === 2 ? 'block' : 'hidden'}`}>
+                            {listVideos?.map((item, index) => (
+                                <ItemVideo data={item} key={index} />
+                            ))}
+                        </div>
+                        <div className={`grid grid-cols-5 gap-x-4 gap-y-6 ${toggle === 3 ? 'block' : 'hidden'}`}>
+                            {listVideos?.map((item, index) => (
+                                <ItemVideo data={item} key={index} />
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="flex-auto flex flex-col justify-start min-h-[490px] min-w-[52px] relative"></div>
         </div>
     );
 }

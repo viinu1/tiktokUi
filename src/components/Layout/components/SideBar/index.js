@@ -20,6 +20,14 @@ function SideBar() {
         }
     }, []);
 
+    const userToken = localStorage.getItem('userToken');
+    const [isLogin, setIsLogin] = useState(false);
+    useEffect(() => {
+        if (!!userToken) {
+            setIsLogin(true);
+        }
+    }, [isLogin, userToken]);
+
     const active =
         'p-2 text-3xl text-seconde rounded-lg flex items-center justify-start gap-3 no-underline transition delay-200 ease-in hover:bg-gray-100 hover:text-seconde';
     const baseActive =
@@ -52,17 +60,21 @@ function SideBar() {
                     <span className="text-lg font-bold ">Hồ sơ</span>
                 </NavLink>
             </div>
-            <div className="p-3 border-b">
-                <h5 className="text-base text-[#16182380]">
-                    Đăng nhập để follow các tác giả, thích video và xem bình luận.
-                </h5>
-                <a
-                    href="/"
-                    className="w-full flex items-center justify-center text-lg text-seconde px-2 py-[6px] mt-7 border border-seconde rounded-lg hover:text-seconde hover:bg-[#fe2c5510]"
-                >
-                    Đăng nhập
-                </a>
-            </div>
+            {!isLogin ? (
+                <div className="p-3 border-b">
+                    <h5 className="text-base text-[#16182380]">
+                        Đăng nhập để follow các tác giả, thích video và xem bình luận.
+                    </h5>
+                    <a
+                        href="/"
+                        className="w-full flex items-center justify-center text-lg text-seconde px-2 py-[6px] mt-7 border border-seconde rounded-lg hover:text-seconde hover:bg-[#fe2c5510]"
+                    >
+                        Đăng nhập
+                    </a>
+                </div>
+            ) : (
+                ''
+            )}
             <SuggestUser title="Các tài khoản gợi ý" data={suggest} />
         </div>
     );
